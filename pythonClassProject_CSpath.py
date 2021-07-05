@@ -1,6 +1,6 @@
 class Menu:
   '''
-  The class that deals with menu at different time
+  The class that deals with menus at different time
   '''
   def __init__(self, name, items, start_time, end_time):
     self.name = name
