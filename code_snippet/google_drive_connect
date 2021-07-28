@@ -1,0 +1,5 @@
+from google.colab import drive
+import pandas as pd
+drive.mount('/content/gdrive') # 此處需要登入google帳號
+# 獲取授權碼之後輸入即可連動雲端硬碟
+doc1 = pd.read_csv("") #在雙引號中間要填入雲端硬碟中的檔案位置
