@@ -1,0 +1,9 @@
+import requests
+from bs4 import BeautifulSoup
+
+#There are repetitive steps in creating soup object, so I write it into functions.
+def parse_html(link):
+    webpage_response = requests.get(link)
+    webpage = webpage_response.content
+    soup = BeautifulSoup(webpage, "html.parser")
+    return soup
