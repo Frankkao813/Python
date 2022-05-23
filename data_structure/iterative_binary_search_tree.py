@@ -1,6 +1,3 @@
-from operator import truediv
-
-
 class TreeNode:
     def __init__(self, val='A', left=None, right=None):
         self.val = val
@@ -53,7 +50,7 @@ class BST:
         if(self.root == None or self.search(val) == False):
             return False
 
-         # the parent will be none unless the node is at the root
+         # the parent will not be none unless the node is at the root
         curr_parent, curr_node = self.ReturnNodes(val)
         self._delete(curr_parent, curr_node)
         return True
@@ -67,7 +64,7 @@ class BST:
         elif(curr_node.left == None or curr_node.right == None): # only one children
             self.delete_one_child(curr_parent, curr_node)
         else: # there are two children
-            rear_parent, rear_curr = self.inorderSuccessor(curr_node.right)
+            rear_parent, rear_curr = self.inorderSuccessor(curr_node.right, curr_node)
             curr_node.val = rear_curr.val
             self._delete(rear_parent, rear_curr)
         
@@ -92,7 +89,7 @@ class BST:
                 curr_node = curr_node.right
         return (curr_parent, curr_node)
 
-    def inorderSuccessor(self, node):
+    def inorderSuccessor(self, node, curr_node):
         '''
         return the inorder successor and its parent
         '''
@@ -101,16 +98,20 @@ class BST:
         while(curr_successor.left != None):
             curr_successor_parent = curr_successor
             curr_successor = curr_successor.left
+        
+        if(curr_successor_parent == None):
+            curr_successor_parent = curr_node
+
 
         return (curr_successor_parent, curr_successor)
 
     def delete_no_child(self, curr_parent, curr_node):
-        if(curr_parent.left == curr_node):
-            curr_parent.left = None
-        elif(curr_parent.right == curr_node):
-            curr_parent.right = None
-        else: # there is only one node
+        if(curr_parent == None): # there is only one node  # if other two scenarios on the top - will cause error
             self.root = None
+        elif(curr_parent.left == curr_node):
+            curr_parent.left = None
+        else: # curr_parent.right == curr_node
+            curr_parent.right = None
 
     def delete_one_child(self, curr_parent, curr_node):
         if(curr_node.left != None): # children at the left node
@@ -159,7 +160,6 @@ myBST.insert('U')
 myBST.insert('T')
 myBST.insert('E')
 myBST.insert('R')
-# myBST.print_tree()
 
 
-# https://medium.com/@Kadai/%E8%B3%87%E6%96%99%E7%B5%90%E6%A7%8B%E5%A4%A7%E4%BE%BF%E7%95%B6-binary-search-tree-3c40be3204e
+#myBST.print_tree()
